@@ -434,7 +434,7 @@ function handleSwipeGesture() {
     const touchDuration = Date.now() - touchStartTime;
 
     // Tap detection - short touch with minimal movement
-    if (absX < 20 && absY < 20 && touchDuration < 300) {
+    if (absX < 30 && absY < 30 && touchDuration < 400) {
         handleEnter();
         return;
     }
@@ -447,17 +447,17 @@ function handleSwipeGesture() {
             handleEnter(); // Swipe right = enter
         }
     }
-    // Vertical swipe - FIXED: now natural direction
+    // Vertical swipe - scroll-like behavior
     else if (absY > SWIPE_THRESHOLD) {
-        if (diffY < 0) {
-            // Swipe up = go UP in list (previous item)
+        if (diffY > 0) {
+            // Swipe DOWN (finger moves down) = scroll UP = previous item
             if (currentView === 'main') {
                 mainIndex = (mainIndex - 1 + mainItems.length) % mainItems.length;
             } else if (currentSubItems.length > 0) {
                 subIndex = (subIndex - 1 + currentSubItems.length) % currentSubItems.length;
             }
         } else {
-            // Swipe down = go DOWN in list (next item)
+            // Swipe UP (finger moves up) = scroll DOWN = next item
             if (currentView === 'main') {
                 mainIndex = (mainIndex + 1) % mainItems.length;
             } else if (currentSubItems.length > 0) {
