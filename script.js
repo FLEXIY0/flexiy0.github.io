@@ -403,21 +403,20 @@ let touchStartX = 0;
 let touchStartY = 0;
 let touchEndX = 0;
 let touchEndY = 0;
-const SWIPE_THRESHOLD = 50;
+const SWIPE_THRESHOLD = 40;
 let isTouchNavigating = false;
+let touchStartTime = 0;
 
 document.addEventListener('touchstart', (e) => {
-    // Don't interfere with game controls when game is active
-    if (isGameActive) return;
-
     const touch = e.touches[0];
     touchStartX = touch.clientX;
     touchStartY = touch.clientY;
+    touchStartTime = Date.now();
     isTouchNavigating = true;
 }, { passive: true });
 
 document.addEventListener('touchend', (e) => {
-    if (!isTouchNavigating || isGameActive) return;
+    if (!isTouchNavigating) return;
 
     const touch = e.changedTouches[0];
     touchEndX = touch.clientX;
@@ -432,9 +431,10 @@ function handleSwipeGesture() {
     const diffY = touchEndY - touchStartY;
     const absX = Math.abs(diffX);
     const absY = Math.abs(diffY);
+    const touchDuration = Date.now() - touchStartTime;
 
-    // Tap detection (small movement)
-    if (absX < SWIPE_THRESHOLD && absY < SWIPE_THRESHOLD) {
+    // Tap detection - short touch with minimal movement
+    if (absX < 20 && absY < 20 && touchDuration < 300) {
         handleEnter();
         return;
     }
@@ -447,21 +447,21 @@ function handleSwipeGesture() {
             handleEnter(); // Swipe right = enter
         }
     }
-    // Vertical swipe
+    // Vertical swipe - FIXED: now natural direction
     else if (absY > SWIPE_THRESHOLD) {
         if (diffY < 0) {
-            // Swipe up = next item (down in list)
-            if (currentView === 'main') {
-                mainIndex = (mainIndex + 1) % mainItems.length;
-            } else if (currentSubItems.length > 0) {
-                subIndex = (subIndex + 1) % currentSubItems.length;
-            }
-        } else {
-            // Swipe down = previous item (up in list)
+            // Swipe up = go UP in list (previous item)
             if (currentView === 'main') {
                 mainIndex = (mainIndex - 1 + mainItems.length) % mainItems.length;
             } else if (currentSubItems.length > 0) {
                 subIndex = (subIndex - 1 + currentSubItems.length) % currentSubItems.length;
+            }
+        } else {
+            // Swipe down = go DOWN in list (next item)
+            if (currentView === 'main') {
+                mainIndex = (mainIndex + 1) % mainItems.length;
+            } else if (currentSubItems.length > 0) {
+                subIndex = (subIndex + 1) % currentSubItems.length;
             }
         }
         updateSelections();

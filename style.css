@@ -299,29 +299,29 @@ canvas {
 /* Mobile Responsive */
 @media (max-width: 600px) {
     .menu-item {
-        font-size: 22px;
-        margin: 14px 0;
+        font-size: 28px;
+        margin: 16px 0;
     }
 
     .menu-item .selector {
-        font-size: 26px;
-        width: 28px;
-        margin-right: 8px;
+        font-size: 32px;
+        width: 35px;
+        margin-right: 10px;
     }
 
     .pixel-text {
-        font-size: 26px;
-        margin-bottom: 20px;
+        font-size: 32px;
+        margin-bottom: 25px;
     }
 
     #score-display {
-        font-size: 12px;
+        font-size: 14px;
         top: 15px;
         right: 15px;
     }
 
     #instructions {
-        font-size: 9px;
+        font-size: 10px;
         bottom: 20px;
     }
 
