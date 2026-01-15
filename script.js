@@ -393,21 +393,99 @@ document.addEventListener('mouseout', (e) => {
 
 // Update Clock
 function updateClock() {
-    const clock = document.getElementById('clock');
-    if (!clock) return;
-    const now = new Date();
-    clock.textContent = now.toLocaleTimeString('en-GB', { hour12: false });
+    // Clock removed with header
 }
 setInterval(updateClock, 1000);
 updateClock();
+
+// TOUCH SWIPE NAVIGATION
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+const SWIPE_THRESHOLD = 50;
+let isTouchNavigating = false;
+
+document.addEventListener('touchstart', (e) => {
+    // Don't interfere with game controls when game is active
+    if (isGameActive) return;
+
+    const touch = e.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    isTouchNavigating = true;
+}, { passive: true });
+
+document.addEventListener('touchend', (e) => {
+    if (!isTouchNavigating || isGameActive) return;
+
+    const touch = e.changedTouches[0];
+    touchEndX = touch.clientX;
+    touchEndY = touch.clientY;
+
+    handleSwipeGesture();
+    isTouchNavigating = false;
+}, { passive: true });
+
+function handleSwipeGesture() {
+    const diffX = touchEndX - touchStartX;
+    const diffY = touchEndY - touchStartY;
+    const absX = Math.abs(diffX);
+    const absY = Math.abs(diffY);
+
+    // Tap detection (small movement)
+    if (absX < SWIPE_THRESHOLD && absY < SWIPE_THRESHOLD) {
+        handleEnter();
+        return;
+    }
+
+    // Horizontal swipe dominates
+    if (absX > absY && absX > SWIPE_THRESHOLD) {
+        if (diffX < 0) {
+            handleBack(); // Swipe left = back
+        } else {
+            handleEnter(); // Swipe right = enter
+        }
+    }
+    // Vertical swipe
+    else if (absY > SWIPE_THRESHOLD) {
+        if (diffY < 0) {
+            // Swipe up = next item (down in list)
+            if (currentView === 'main') {
+                mainIndex = (mainIndex + 1) % mainItems.length;
+            } else if (currentSubItems.length > 0) {
+                subIndex = (subIndex + 1) % currentSubItems.length;
+            }
+        } else {
+            // Swipe down = previous item (up in list)
+            if (currentView === 'main') {
+                mainIndex = (mainIndex - 1 + mainItems.length) % mainItems.length;
+            } else if (currentSubItems.length > 0) {
+                subIndex = (subIndex - 1 + currentSubItems.length) % currentSubItems.length;
+            }
+        }
+        updateSelections();
+    }
+}
+
+// Set instructions based on device type
+function setInstructions() {
+    const instructions = document.getElementById('instructions');
+    if (!instructions) return;
+
+    const isTouchDevice = window.matchMedia('(hover: none)').matches || 'ontouchstart' in window;
+    instructions.textContent = isTouchDevice
+        ? 'Swipe ↑↓ navigate • Tap select • Swipe ← back'
+        : 'Arrows/WS navigate • Enter select • Backspace back';
+}
+setInstructions();
 
 // GAME LOGIC: VERTICAL SHOOTER
 let score = 0;
 const bullets = [];
 const enemies = [];
 const particles = [];
-const systemText = document.getElementById('system-text');
-const scoreBlock = document.getElementById('score-block');
+const scoreDisplay = document.getElementById('score-display');
 const scoreVal = document.getElementById('score-val');
 
 // Initialize Player Ship
@@ -515,9 +593,8 @@ class Enemy {
 }
 
 function updateLevelDisplay(isLoss = false) {
-    systemText.style.display = 'none';
-    scoreBlock.style.display = 'inline';
-    scoreVal.textContent = score;
+    if (scoreDisplay) scoreDisplay.style.display = 'block';
+    if (scoreVal) scoreVal.textContent = score;
 
     const menuHeader = document.querySelector('.pixel-text'); // Main menu header
     if (!menuHeader) return;
@@ -685,7 +762,6 @@ function handleEnter() {
             } else {
                 // SECOND CLICK: CHAOS
                 dropLinks();
-                document.getElementById('header-bar').style.display = 'none'; // Hide header too for full clean effect
                 document.querySelector('.pixel-text').textContent = ""; // Clear title
             }
             return;

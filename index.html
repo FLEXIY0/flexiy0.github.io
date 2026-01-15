@@ -16,17 +16,10 @@
     <div id="custom-cursor"></div>
 
 
-    <div id="header-bar">
-        <div class="header-left">
-            <span class="status-dot"></span>
-            <span id="system-text" class="header-title">FLEXIY0 // SYSTEM</span>
-        </div>
-        <div class="header-right">
-            <span id="score-block" class="header-stat" style="display:none; color:#00ffcc;">LVL: <span
-                    id="score-val">0</span>/30</span>
-            <span class="header-stat">VER 1.0.0</span>
-            <span id="clock" class="header-stat">00:00:00</span>
-        </div>
+    <!-- Score display for game mode -->
+    <div id="score-display"
+        style="display:none; position:fixed; top:20px; right:20px; z-index:100; mix-blend-mode:difference; color:white; font-size:14px;">
+        LVL: <span id="score-val">0</span>/30
     </div>
 
     <div id="ui-wrapper">
@@ -70,7 +63,7 @@
         </div>
     </div>
 
-    <div id="instructions">Arrows/WS to navigate • Enter to select • Backspace to back</div>
+    <div id="instructions"></div>
     <script src="script.js"></script>
 </body>
 
