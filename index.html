@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLEXIY.IO // SYSTEM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <div id="custom-cursor"></div>
+
+
+    <div id="header-bar">
+        <div class="header-left">
+            <span class="status-dot"></span>
+            <span id="system-text" class="header-title">FLEXIY0 // SYSTEM</span>
+        </div>
+        <div class="header-right">
+            <span id="score-block" class="header-stat" style="display:none; color:#00ffcc;">LVL: <span
+                    id="score-val">0</span>/30</span>
+            <span class="header-stat">VER 1.0.0</span>
+            <span id="clock" class="header-stat">00:00:00</span>
+        </div>
+    </div>
+
+    <div id="ui-wrapper">
+        <div id="menu-container" class="active">
+            <div class="view-header">
+                <h2 class="pixel-text">SELECT SOURCE</h2>
+            </div>
+            <ul id="menu" class="menu-list">
+                <li class="menu-item active" data-target="github">
+                    <span class="selector">></span><span class="menu-text">Github</span>
+                </li>
+                <li class="menu-item" data-target="discord">
+                    <span class="selector">></span><span class="menu-text">Discord</span>
+                </li>
+                <li class="menu-item" data-target="telegram">
+                    <span class="selector">></span><span class="menu-text">Telegram</span>
+                </li>
+                <li class="menu-item" data-target="reddit">
+                    <span class="selector">></span><span class="menu-text">Reddit</span>
+                </li>
+                <li class="menu-item" data-target="twitter">
+                    <span class="selector">></span><span class="menu-text">X (Twitter)</span>
+                </li>
+                <li class="menu-item" data-target="twitch">
+                    <span class="selector">></span><span class="menu-text">Twitch</span>
+                </li>
+                <li class="menu-item" data-target="gamemode" id="game-toggle">
+                    <span class="selector">></span><span class="menu-text">???</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Generic View Template (used for all) -->
+        <div id="dynamic-view" class="view">
+            <div class="view-header">
+                <h2 id="view-title" class="pixel-text">TITLE</h2>
+            </div>
+            <ul id="dynamic-list" class="menu-list">
+                <!-- Content injected via JS -->
+            </ul>
+        </div>
+    </div>
+
+    <div id="instructions">Arrows/WS to navigate • Enter to select • Backspace to back</div>
+    <script src="script.js"></script>
+</body>
+
+</html>
