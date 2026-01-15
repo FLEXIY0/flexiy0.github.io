@@ -448,17 +448,17 @@ function handleSwipeGesture() {
             handleEnter(); // Swipe right = enter
         }
     }
-    // Vertical swipe - scroll-like behavior
+    // Vertical swipe - direct behavior (swipe up = go up)
     else if (absY > SWIPE_THRESHOLD) {
-        if (diffY > 0) {
-            // Swipe DOWN (finger moves down) = scroll UP = previous item
+        if (diffY < 0) {
+            // Swipe UP = go UP in list (previous item)
             if (currentView === 'main') {
                 mainIndex = (mainIndex - 1 + mainItems.length) % mainItems.length;
             } else if (currentSubItems.length > 0) {
                 subIndex = (subIndex - 1 + currentSubItems.length) % currentSubItems.length;
             }
         } else {
-            // Swipe UP (finger moves up) = scroll DOWN = next item
+            // Swipe DOWN = go DOWN in list (next item)
             if (currentView === 'main') {
                 mainIndex = (mainIndex + 1) % mainItems.length;
             } else if (currentSubItems.length > 0) {
