@@ -221,7 +221,9 @@ async function fetchGithubProjects() {
         const response = await fetch('https://api.github.com/users/FLEXIY0/repos?sort=updated&visibility=public&per_page=15');
         const data = await response.json();
         if (Array.isArray(data)) {
-            const projects = data.map(repo => ({ name: repo.name, url: repo.html_url }));
+            const projects = data
+                .filter(repo => repo.name.toLowerCase() !== 'flexiy0.github.io') // Filter out self
+                .map(repo => ({ name: repo.name.toUpperCase(), url: repo.html_url })); // Upper case for style
             renderDynamicMenu(projects);
         }
     } catch (e) {
