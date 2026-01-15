@@ -314,6 +314,22 @@ canvas {
         margin-bottom: 25px;
     }
 
+    /* Smaller font for submenus (GitHub links etc) */
+    #dynamic-list .menu-item {
+        font-size: 16px;
+        margin: 12px 0;
+    }
+
+    #dynamic-list .menu-item .selector {
+        font-size: 20px;
+        width: 25px;
+        margin-right: 8px;
+    }
+
+    #dynamic-view .pixel-text {
+        font-size: 22px;
+    }
+
     #score-display {
         font-size: 14px;
         top: 15px;

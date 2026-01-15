@@ -433,8 +433,9 @@ function handleSwipeGesture() {
     const absY = Math.abs(diffY);
     const touchDuration = Date.now() - touchStartTime;
 
-    // Tap detection - short touch with minimal movement
-    if (absX < 30 && absY < 30 && touchDuration < 400) {
+    // TAP - very small movement AND short duration
+    const isTap = absX < 15 && absY < 15 && touchDuration < 250;
+    if (isTap) {
         handleEnter();
         return;
     }
