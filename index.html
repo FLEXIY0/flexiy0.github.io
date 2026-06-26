@@ -1,70 +1,217 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FLEXIY.IO // SYSTEM</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alex Oldman — профиль</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;0,800;1,400&display=swap">
+<style>
+  /* ============================================================
+     DROOPI DESIGN SYSTEM — tokens (monochrome + terminal green)
+     ============================================================ */
+  :root {
+    --black:#000000; --gray-950:#0A0A0A; --gray-900:#111111; --gray-850:#161616;
+    --gray-800:#1C1C1C; --gray-700:#2A2A2A; --gray-500:#5C5C5C; --gray-400:#7A7A7A;
+    --gray-300:#9A9A9A; --white:#FFFFFF;
+    --accent:#3DF07A;
+    --bg:var(--black); --text:var(--white); --text-muted:var(--gray-300);
+    --text-dim:var(--gray-400); --border:var(--gray-700);
+    --font-mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+    --dur:.18s; --ease:cubic-bezier(.4,0,.2,1);
+  }
+
+  * { box-sizing:border-box; }
+  html,body { margin:0; }
+  body {
+    min-height:100vh; background:var(--bg); color:var(--text);
+    font-family:var(--font-mono);
+    display:flex; justify-content:center; padding:48px 24px;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection { background:var(--gray-700); }
+  svg { display:block; }
+
+  .card { width:100%; max-width:480px; display:flex; flex-direction:column; gap:28px; }
+  .divider { height:1px; background:var(--border); }
+
+  /* Header */
+  .header { display:flex; align-items:center; justify-content:space-between; }
+  .brand { display:flex; align-items:center; gap:14px; }
+  .mark {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:56px; height:56px; border:2px solid var(--white); border-radius:10px;
+    font-size:22px; font-weight:800; letter-spacing:-.02em; color:var(--white);
+  }
+  .brand-name { font-size:30px; font-weight:500; letter-spacing:-.02em; color:var(--white); }
+  .icon-btn {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:44px; height:44px; border:1px solid var(--border); border-radius:10px;
+    background:transparent; color:var(--text-muted); cursor:pointer;
+    transition:color var(--dur) var(--ease), border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+  }
+  .icon-btn:hover { color:var(--white); border-color:var(--gray-500); background:var(--gray-950); }
+
+  /* Identity */
+  .identity { display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap; }
+  .identity-text {
+    flex:1 1 160px; display:flex; flex-direction:column;
+    align-items:flex-start; justify-content:center; gap:12px;
+  }
+  .identity-text h1 {
+    margin:0; font-size:40px; font-weight:700; letter-spacing:-.02em;
+    line-height:1.05; color:var(--white);
+  }
+  .role { font-size:16px; color:var(--text-dim); letter-spacing:.04em; }
+  .portrait {
+    width:230px; height:270px; object-fit:cover; object-position:center 20%;
+    border-radius:16px; border:1px solid var(--gray-800);
+  }
+
+  /* Sections */
+  .section { display:flex; flex-direction:column; gap:14px; }
+  .section h2 { margin:0; font-size:18px; font-weight:500; color:var(--white); }
+  .section p { margin:0; font-size:15px; color:var(--text-muted); line-height:1.7; }
+
+  /* Achievements */
+  .ach-list { display:flex; flex-direction:column; gap:18px; margin:0; padding:0; list-style:none; }
+  .ach { display:flex; gap:14px; align-items:flex-start; }
+  .ach > svg { width:22px; height:22px; flex:0 0 22px; color:var(--text-dim); margin-top:1px; }
+  .ach-body { display:flex; flex-direction:column; gap:4px; }
+  .ach-title { font-size:15px; color:var(--white); display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .ach-sub { font-size:13px; color:var(--text-dim); line-height:1.5; }
+  .live {
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--accent); border:1px solid var(--accent); border-radius:999px;
+    padding:2px 8px;
+  }
+  .live .dot {
+    width:7px; height:7px; border-radius:50%; background:var(--accent);
+    box-shadow:0 0 8px var(--accent); animation:pulse 1.8s var(--ease) infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.35;} }
+
+  /* Contact links */
+  .links { display:flex; flex-direction:column; gap:16px; }
+  .social {
+    display:inline-flex; align-items:center; gap:14px;
+    font-size:16px; color:var(--text-muted); text-decoration:none; width:fit-content;
+    transition:color var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+  .social svg { width:22px; height:22px; color:var(--text-dim); transition:color var(--dur) var(--ease); }
+  .social:hover { color:var(--white); transform:translateX(3px); }
+  .social:hover svg { color:var(--white); }
+
+  /* Footer */
+  .footer { display:flex; align-items:center; justify-content:space-between; }
+  .footer span { font-size:12px; color:var(--text-dim); }
+
+  @media (max-width:520px) {
+    .identity-text h1 { font-size:34px; }
+    .portrait { width:100%; height:300px; }
+  }
+</style>
 </head>
-
 <body>
-    <canvas id="canvas"></canvas>
-    <div id="custom-cursor"></div>
+  <main class="card">
 
-
-    <!-- Score display for game mode -->
-    <div id="score-display"
-        style="display:none; position:fixed; top:20px; right:20px; z-index:100; mix-blend-mode:difference; color:white; font-size:14px;">
-        LVL: <span id="score-val">0</span>/30
+    <!-- Header -->
+    <div class="header">
+      <div class="brand">
+        <span class="mark">&gt;_</span>
+        <span class="brand-name">flexiy0</span>
+      </div>
+      <button class="icon-btn" type="button" title="Поделиться" aria-label="Поделиться"
+              onclick="navigator.clipboard&amp;&amp;navigator.clipboard.writeText(location.href)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 16V4M12 4l-4 4M12 4l4 4"/><path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/>
+        </svg>
+      </button>
     </div>
 
-    <div id="ui-wrapper">
-        <div id="menu-container" class="active">
-            <div class="view-header">
-                <h2 class="pixel-text">SELECT SOURCE</h2>
-            </div>
-            <ul id="menu" class="menu-list">
-                <li class="menu-item active" data-target="github">
-                    <span class="selector">></span><span class="menu-text">Github</span>
-                </li>
-                <li class="menu-item" data-target="discord">
-                    <span class="selector">></span><span class="menu-text">Discord</span>
-                </li>
-                <li class="menu-item" data-target="telegram">
-                    <span class="selector">></span><span class="menu-text">Telegram</span>
-                </li>
-                <li class="menu-item" data-target="reddit">
-                    <span class="selector">></span><span class="menu-text">Reddit</span>
-                </li>
-                <li class="menu-item" data-target="twitter">
-                    <span class="selector">></span><span class="menu-text">X (Twitter)</span>
-                </li>
-                <li class="menu-item" data-target="twitch">
-                    <span class="selector">></span><span class="menu-text">Twitch</span>
-                </li>
-                <li class="menu-item" data-target="gamemode" id="game-toggle">
-                    <span class="selector">></span><span class="menu-text">???</span>
-                </li>
-            </ul>
-        </div>
+    <div class="divider"></div>
 
-        <!-- Generic View Template (used for all) -->
-        <div id="dynamic-view" class="view">
-            <div class="view-header">
-                <h2 id="view-title" class="pixel-text">TITLE</h2>
-            </div>
-            <ul id="dynamic-list" class="menu-list">
-                <!-- Content injected via JS -->
-            </ul>
-        </div>
+    <!-- Identity -->
+    <div class="identity">
+      <div class="identity-text">
+        <h1>Alex<br>Oldman</h1>
+        <span class="role">Системный администратор · Техподдержка</span>
+      </div>
+      <img class="portrait" src="templates/profile-card/photo.jpg" alt="Alex Oldman">
     </div>
 
-    <div id="instructions"></div>
-    <script src="script.js"></script>
+    <div class="divider"></div>
+
+    <!-- About -->
+    <div class="section">
+      <h2>Обо мне</h2>
+      <p>Специалист технической поддержки пользователей и системный администратор. Просто славный парень, который любит создавать для себя open source софт — а иногда им начинают пользоваться и другие.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Achievements -->
+    <div class="section">
+      <h2>Чем горжусь</h2>
+      <ul class="ach-list">
+        <li class="ach">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="6" y1="11" x2="10" y2="11"/><line x1="8" y1="9" x2="8" y2="13"/>
+            <line x1="15" y1="12" x2="15.01" y2="12"/><line x1="18" y1="10" x2="18.01" y2="10"/>
+            <rect x="2" y="6" width="20" height="12" rx="5"/>
+          </svg>
+          <div class="ach-body">
+            <span class="ach-title">
+              Сообщество по ретро-геймингу
+              <span class="live"><span class="dot"></span>100+ участников</span>
+            </span>
+            <span class="ach-sub">Собственное комьюнити: эмуляция, железо и старые добрые игры.</span>
+          </div>
+        </li>
+        <li class="ach">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V5l8-3z"/>
+            <rect x="9" y="10" width="6" height="5" rx="1"/><path d="M10 10V8.5a2 2 0 0 1 4 0V10"/>
+          </svg>
+          <div class="ach-body">
+            <span class="ach-title">Популярный VPN-конфигуратор</span>
+            <span class="ach-sub">Open source инструмент для генерации конфигов, которым пользуются люди.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Contact links -->
+    <div class="links">
+      <a class="social" href="https://github.com/flexiy0">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 1.5A10.5 10.5 0 0 0 8.68 22c.52.1.71-.23.71-.5v-1.96c-2.92.64-3.54-1.25-3.54-1.25-.48-1.21-1.17-1.54-1.17-1.54-.95-.65.07-.64.07-.64 1.06.07 1.61 1.09 1.61 1.09.94 1.6 2.46 1.14 3.06.87.1-.68.37-1.14.66-1.4-2.33-.27-4.78-1.17-4.78-5.18 0-1.15.41-2.08 1.08-2.82-.11-.27-.47-1.34.1-2.79 0 0 .88-.28 2.88 1.07a10 10 0 0 1 5.24 0c2-1.35 2.88-1.07 2.88-1.07.57 1.45.21 2.52.1 2.79.68.74 1.08 1.67 1.08 2.82 0 4.02-2.46 4.9-4.8 5.16.38.33.71.97.71 1.96v2.9c0 .28.19.61.72.5A10.5 10.5 0 0 0 12 1.5z"/>
+        </svg>github.com/flexiy0
+      </a>
+      <a class="social" href="https://t.me/flexiy0">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M21.94 4.5 18.7 19.78c-.24 1.08-.89 1.34-1.8.84l-4.98-3.67-2.4 2.31c-.27.27-.49.49-1 .49l.35-5.07 9.2-8.31c.4-.36-.09-.56-.62-.2L4.07 12.5l-4.9-1.53C-.9 10.65-.92 9.9.5 9.3l20.46-7.89c.96-.36 1.8.23 1.48 3.09z" transform="translate(1.2 0.3)"/>
+        </svg>Telegram
+      </a>
+      <a class="social" href="#">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M20.32 5.56A19 19 0 0 0 15.6 4.1l-.24.48a17.6 17.6 0 0 1 4.18 1.3 17.9 17.9 0 0 0-15.08 0 17.6 17.6 0 0 1 4.18-1.3L8.4 4.1a19 19 0 0 0-4.72 1.46C.7 9.98-.1 14.3.3 18.55a19.2 19.2 0 0 0 5.8 2.93l.46-.64a12.6 12.6 0 0 1-2.06-.99l.5-.39a13.6 13.6 0 0 0 11.6 0l.5.39c-.65.39-1.34.72-2.06.99l.46.64a19.2 19.2 0 0 0 5.8-2.93c.47-4.93-.8-9.21-3.38-12.99zM8.3 15.74c-1.13 0-2.06-1.04-2.06-2.32s.91-2.32 2.06-2.32 2.08 1.05 2.06 2.32c0 1.28-.91 2.32-2.06 2.32zm7.4 0c-1.13 0-2.06-1.04-2.06-2.32s.91-2.32 2.06-2.32 2.08 1.05 2.06 2.32c0 1.28-.9 2.32-2.06 2.32z"/>
+        </svg>Discord-сообщество
+      </a>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <span>© 2026 Alex Oldman</span>
+      <span>Made with open source ♡</span>
+    </div>
+
+  </main>
 </body>
-
 </html>
