@@ -7,11 +7,11 @@
 <!-- @template name="Profile Card" description="Droopi personal profile card — logo, portrait, about, contact links, social footer" -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0">
 <style>
   :root {
-    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
     --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
     --dur: .18s; --ease: cubic-bezier(.4,0,.2,1);
   }
@@ -69,20 +69,19 @@
   .icon-btn:hover { color: #fff; border-color: #7A7A7A; }
 
   /* Identity */
-  .identity { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-  .identity-text { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .identity { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+  .identity-text { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
   .identity-text h1 {
     margin: 0; font-family: var(--serif);
-    font-size: clamp(40px, 12vw, 54px); font-weight: 500; letter-spacing: 0.01em;
-    line-height: 1.02; color: #fff;
+    font-size: clamp(48px, 16vw, 66px); font-weight: 500; letter-spacing: 0.01em;
+    line-height: 0.98; color: #fff;
   }
   .role {
-    font-size: 12px; font-weight: 400; color: #7A7A7A;
-    text-transform: uppercase; letter-spacing: 0.22em;
+    font-size: 14px; font-weight: 400; color: #7A7A7A; letter-spacing: 0.05em;
   }
   .portrait {
     flex: 0 0 auto;
-    width: clamp(150px, 42%, 230px); aspect-ratio: 230 / 270; height: auto;
+    width: clamp(132px, 38%, 210px); aspect-ratio: 230 / 270; height: auto;
     object-fit: cover; object-position: center 18%;
     border-radius: 16px; border: 1px solid #1C1C1C;
   }
